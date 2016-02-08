@@ -79,7 +79,7 @@ public class Node extends Server {
 	}
 
 	@Override
-	public void onRequest(Request request) {
+	public synchronized void onRequest(Request request) {
 		String message = request.getMessage();
 		String senderIP = request.getHost();
 		int senderPort = request.getPort();
@@ -117,9 +117,9 @@ public class Node extends Server {
 					String ip = tokenizer.nextToken();
 					String port = tokenizer.nextToken();
 					String userID = tokenizer.nextToken();
-					
+
 					System.out.println(String.format("%s:%s - %s", ip, port, userID));
-					
+
 					NodeInfo node = new NodeInfo(ip, Integer.parseInt(port));
 					returnedNodes.add(node);
 				}
@@ -335,6 +335,14 @@ public class Node extends Server {
 			send(searchString, info.getIp(), info.getPort());
 			forwardMsgCount++;
 		}
+
+		List<String> results = movieList.search(movie);
+
+		String resultString = "0114 SEROK " + results.size() + " " + ip + " " + port + " " + 0 + " " + timestamp;
+		for (int i = 0; i < results.size(); i++) {
+			resultString += " " + results.get(i);
+		}
+		onRequest(new Request(ip, port, resultString));
 
 		System.out.println("Forwarded messages for query " + "'" + searchString + "' " + forwardMsgCount);
 	}
