@@ -1,0 +1,25 @@
+# Eclipse
+.classpath
+.project
+.settings/
+ 
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+contraservice/catalina.base_IS_UNDEFINED/
+ 
+# Maven
+log/
+target/
+dependency-reduced-pom.xml
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Temporary files
+*~
+neo4j-home/
