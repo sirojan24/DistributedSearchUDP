@@ -15,7 +15,7 @@ public class Utility {
 	}
 
 	public static void printToFile(String message) {
-		try (PrintWriter writer = new PrintWriter(new FileOutputStream(FILE_NAME), true);) {
+		try (PrintWriter writer = new PrintWriter(new FileOutputStream(FILE_NAME, true));) {
 			writer.println(message);
 		} catch (FileNotFoundException e) {
 			LOGGER.error(e.getMessage(), e);
