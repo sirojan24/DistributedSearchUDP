@@ -6,6 +6,8 @@ import com.uom.cse.distsearch.model.QueryInfo;
 import com.uom.cse.distsearch.util.Constant;
 import com.uom.cse.distsearch.util.Constant.Command;
 import com.uom.cse.distsearch.util.MovieList;
+import com.uom.cse.distsearch.util.Utility;
+
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -23,7 +25,7 @@ public class Node extends Server {
 	private static final Logger LOGGER = Logger.getLogger(Node.class);
 
 	// this node details
-	private String ip = "192.168.1.4";
+	private String ip = "192.168.1.3";
 	private int port;
 
 	private final List<NodeInfo> peerList;
@@ -281,16 +283,28 @@ public class Node extends Server {
 				System.out.println("No files found at " + senderIP + ":" + senderPort);
 			}
 			if (fileCount == 1) {
+				String output = String.format("Number of files: %d\r\nHops: %d\r\nTime: %s millis\r\nOwner %s:%d", fileCount,hops, (currentTimestamp - queryTimestamp), senderIP, senderPort);
+				Utility.printToFile(output);
+				
 				System.out.println("1 file found at " + senderIP + ":" + senderPort);
-				System.out.println("\t" + tokenizer.nextToken());
+				String fileName = tokenizer.nextToken();
+				System.out.println("\t" + fileName);
+				Utility.printToFile(fileName);
 				System.out.println("hops passed through : " + hops);
 				System.out.println("latency in milli seconds : " + (currentTimestamp - queryTimestamp));
+				Utility.printToFile("-----------------------------------------------------");
 			}
 			if (fileCount > 1) {
+				String output = String.format("Number of files: %d\r\nHops: %d\r\nTime: %s millis\r\nOwner %s:%d", fileCount,hops, (currentTimestamp - queryTimestamp), senderIP, senderPort);
+				Utility.printToFile(output);
+				
 				System.out.println(fileCount + " files found at " + senderIP + ":" + senderPort);
 				for (int i = 0; i < fileCount; i++) {
-					System.out.println("\t" + tokenizer.nextToken());
+					String fileName = tokenizer.nextToken();
+					System.out.println("\t" + fileName);
+					Utility.printToFile(fileName);
 				}
+				Utility.printToFile("-----------------------------------------------------");
 				System.out.println("hops passed through : " + hops);
 				System.out.println("latency in milli seconds : " + (currentTimestamp - queryTimestamp));
 			}
