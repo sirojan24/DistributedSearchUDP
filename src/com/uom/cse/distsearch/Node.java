@@ -25,7 +25,7 @@ public class Node extends Server {
 	private static final Logger LOGGER = Logger.getLogger(Node.class);
 
 	// this node details
-	private String ip = "192.168.1.3";
+	private String ip;
 	private int port;
 
 	private final List<NodeInfo> peerList;
@@ -283,9 +283,10 @@ public class Node extends Server {
 				System.out.println("No files found at " + senderIP + ":" + senderPort);
 			}
 			if (fileCount == 1) {
-				String output = String.format("Number of files: %d\r\nHops: %d\r\nTime: %s millis\r\nOwner %s:%d", fileCount,hops, (currentTimestamp - queryTimestamp), senderIP, senderPort);
+				String output = String.format("Number of files: %d\r\nHops: %d\r\nTime: %s millis\r\nOwner %s:%d",
+						fileCount, hops, (currentTimestamp - queryTimestamp), senderIP, senderPort);
 				Utility.printToFile(output);
-				
+
 				System.out.println("1 file found at " + senderIP + ":" + senderPort);
 				String fileName = tokenizer.nextToken();
 				System.out.println("\t" + fileName);
@@ -295,9 +296,10 @@ public class Node extends Server {
 				Utility.printToFile("-----------------------------------------------------");
 			}
 			if (fileCount > 1) {
-				String output = String.format("Number of files: %d\r\nHops: %d\r\nTime: %s millis\r\nOwner %s:%d", fileCount,hops, (currentTimestamp - queryTimestamp), senderIP, senderPort);
+				String output = String.format("Number of files: %d\r\nHops: %d\r\nTime: %s millis\r\nOwner %s:%d",
+						fileCount, hops, (currentTimestamp - queryTimestamp), senderIP, senderPort);
 				Utility.printToFile(output);
-				
+
 				System.out.println(fileCount + " files found at " + senderIP + ":" + senderPort);
 				for (int i = 0; i < fileCount; i++) {
 					String fileName = tokenizer.nextToken();
@@ -314,6 +316,30 @@ public class Node extends Server {
 			String reply = "0010 ERROR";
 			send(reply, senderIP, senderPort);
 		}
+	}
+
+	public List<NodeInfo> getPeerList() {
+		return peerList;
+	}
+
+	public List<String> getMovies() {
+		return movieList.getSelectedMovies();
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
 	}
 
 	private List<NodeInfo> pickNRandom(List<NodeInfo> lst, int n) {
@@ -381,6 +407,8 @@ public class Node extends Server {
 
 		String movieFile = "movies.txt";
 		try (Node node = new Node(movieFile); Scanner scanner = new Scanner(System.in);) {
+			// IP address
+			node.ip = args[0];
 			// Start the node
 			node.run();
 			System.out.println("Node is running on: " + node.port);

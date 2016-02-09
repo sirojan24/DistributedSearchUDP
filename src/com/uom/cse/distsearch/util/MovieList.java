@@ -19,7 +19,7 @@ public class MovieList {
 	private List<String> movies = new ArrayList<String>();
 
 	public MovieList(String fileName) {
-		this.movies = getSelectedMovies(fileName);
+		this.movies = selectMovies(fileName);
 	}
 
 	public List<String> search(String query) {
@@ -37,7 +37,7 @@ public class MovieList {
 		return list;
 	}
 
-	private List<String> getSelectedMovies(String fileName) {
+	private List<String> selectMovies(String fileName) {
 		List<String> list = new ArrayList<>();
 		List<String> movies = new ArrayList<String>();
 
@@ -58,6 +58,10 @@ public class MovieList {
 		}
 
 		return movies;
+	}
+
+	public List<String> getSelectedMovies() {
+		return this.movies;
 	}
 
 	@Override
