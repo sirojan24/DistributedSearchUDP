@@ -29,6 +29,22 @@ public abstract class Server implements AutoCloseable {
 	 * Socket to receive the requests.
 	 */
 	private DatagramSocket socket;
+	
+	// this node details
+	String ip;
+	int port;
+	String username;
+	
+	public Server() {
+		if (socket != null) {
+			try {
+				socket = new DatagramSocket(port);
+			} catch (SocketException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 	public int start() throws SocketException {
 		return start(-1);

@@ -23,11 +23,6 @@ public class Node extends Server {
 	 */
 	private static final Logger LOGGER = Logger.getLogger(Node.class);
 
-	// this node details
-	private String ip;
-	private int port;
-	private String username;
-	
 	private NodeApp app;
 
 	private final List<NodeInfo> peerList;
