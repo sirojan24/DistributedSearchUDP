@@ -27,6 +27,9 @@ public class Node extends Server {
 	// this node details
 	private String ip;
 	private int port;
+	private String username;
+	
+	private NodeApp app;
 
 	private final List<NodeInfo> peerList;
 
@@ -34,8 +37,22 @@ public class Node extends Server {
 
 	private final MovieList movieList;
 
-	public Node(String fileName) {
-		movieList = new MovieList(fileName);
+	public Node(String nodeIp, int nodePort, String username, String filename, NodeApp app) {
+		this.ip = nodeIp;
+		this.port = nodePort;
+		this.username = username;
+		this.app = app;
+		
+		movieList = new MovieList(filename);
+
+		peerList = new ArrayList<NodeInfo>();
+
+		queryList = new ArrayList<QueryInfo>();
+	}
+	
+	public Node(String filename) {
+		
+		movieList = new MovieList(filename);
 
 		peerList = new ArrayList<NodeInfo>();
 
@@ -77,6 +94,8 @@ public class Node extends Server {
 	public void addAsPeer(NodeInfo info) {
 		if (!peerList.contains(info)) {
 			peerList.add(info);
+			
+			app.addNeighbour(info.getUsername(), info.getIp());
 		}
 	}
 
@@ -404,42 +423,42 @@ public class Node extends Server {
 	}
 
 	public static void main(String args[]) {
-
-		String movieFile = "movies.txt";
-		try (Node node = new Node(movieFile); Scanner scanner = new Scanner(System.in);) {
-			// IP address
-			node.ip = args[0];
-			// Start the node
-			node.run();
-			System.out.println("Node is running on: " + node.port);
-			System.out.println("Movies: " + node.movieList);
-			loop: while (true) {
-				// take input and send the packet
-				System.out.println("\nSelect option : ");
-				System.out.println("1: Search");
-				System.out.println("2: Disconnect");
-				int option = Integer.parseInt(scanner.nextLine().trim());
-				switch (option) {
-				case 1:
-					System.out.println("Enter the movie name: ");
-					node.search(scanner.nextLine().trim());
-					break;
-
-				case 2:
-					System.out.println("Disconnecting this node");
-					node.disconnect();
-					node.close();
-					System.exit(0);
-
-					break loop;
-				case 3:
-					System.out.println(node.peerList);
-					break;
-				default:
-					System.out.println("Please enter a valid input");
-					break;
-				}
-			}
-		}
+//
+//		String movieFile = "movies.txt";
+//		try (Node node = new Node(movieFile); Scanner scanner = new Scanner(System.in);) {
+//			// IP address
+//			node.ip = args[0];
+//			// Start the node
+//			node.run();
+//			System.out.println("Node is running on: " + node.port);
+//			System.out.println("Movies: " + node.movieList);
+//			loop: while (true) {
+//				// take input and send the packet
+//				System.out.println("\nSelect option : ");
+//				System.out.println("1: Search");
+//				System.out.println("2: Disconnect");
+//				int option = Integer.parseInt(scanner.nextLine().trim());
+//				switch (option) {
+//				case 1:
+//					System.out.println("Enter the movie name: ");
+//					node.search(scanner.nextLine().trim());
+//					break;
+//
+//				case 2:
+//					System.out.println("Disconnecting this node");
+//					node.disconnect();
+//					node.close();
+//					System.exit(0);
+//
+//					break loop;
+//				case 3:
+//					System.out.println(node.peerList);
+//					break;
+//				default:
+//					System.out.println("Please enter a valid input");
+//					break;
+//				}
+//			}
+//		}
 	}
 }

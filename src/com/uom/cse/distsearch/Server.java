@@ -106,6 +106,36 @@ public abstract class Server implements AutoCloseable {
 		onRequest(response);
 	}
 
+	public static Request registerBootstrapServer(String serverIp, int serverPort, String nodeIp, int nodePort, 
+			String username) throws IOException {
+		
+		Socket clientSocket = new Socket(serverIp, serverPort);
+		PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+		
+		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+		
+		String regString = "0114 REG " + nodeIp + " " + nodePort + " " + username;
+		
+		out.print(regString);
+		out.flush();
+		
+		StringBuilder builder = new StringBuilder();
+		String line = null;
+		while((line = inFromServer.readLine()) != null) {
+			builder.append(line);
+		}
+		System.out.println("DIRECT: " + builder);
+		
+		String result = builder.toString().replace("\r\n", " ").replace('\n', ' ').replace("", "");
+		
+		System.out.println("FROM SERVER: " + result);
+		clientSocket.close();
+
+		Request response = new Request(serverIp, serverPort, result);
+
+		return response;
+	}
+	
 	// public void sendTcpToBootstrapServer(String messsage, String ip, int
 	// port){
 	//
@@ -147,7 +177,7 @@ public abstract class Server implements AutoCloseable {
 	// }
 	// }
 
-	private void startReceiving() {
+	public void startReceiving() {
 		new Thread() {
 			public void run() {
 				while (socket != null && !socket.isClosed()) {

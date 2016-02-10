@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="280.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uom.cse.distsearch.view.RegistrationViewController">
+   <children>
+      <Label layoutX="84.0" layoutY="14.0" text="Bootstrap Server Registration">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <GridPane layoutX="14.0" layoutY="63.0" prefHeight="128.0" prefWidth="372.0" AnchorPane.bottomAnchor="89.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="63.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="276.0" minWidth="10.0" prefWidth="276.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="181.0" minWidth="10.0" prefWidth="96.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="46.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="txtServerIp" promptText="Server IP" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="6.0" right="6.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="txtServerPort" promptText="Port" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="6.0" right="6.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="txtNodeIP" promptText="Node IP" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="6.0" right="6.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="txtNodePort" promptText="Port" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="6.0" right="6.0" />
+               </GridPane.margin>
+            </TextField>
+            <Label text="Bootstrap Server Info">
+               <GridPane.margin>
+                  <Insets left="6.0" />
+               </GridPane.margin>
+            </Label>
+            <Label text="Node Info" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="6.0" right="6.0" />
+               </GridPane.margin>
+            </Label>
+         </children>
+      </GridPane>
+      <GridPane layoutX="14.0" layoutY="198.0" prefHeight="30.0" prefWidth="336.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="txtUsername" promptText="Username">
+               <GridPane.margin>
+                  <Insets left="6.0" right="6.0" />
+               </GridPane.margin>
+            </TextField>
+         </children>
+      </GridPane>
+      <Button fx:id="btnRegister" layoutX="170.0" layoutY="239.0" mnemonicParsing="false" onAction="#registerAction" text="Register" AnchorPane.rightAnchor="170.0" />
+      <Label fx:id="lblErrorMsg" layoutX="14.0" layoutY="41.0" textFill="#f50909" wrapText="true" AnchorPane.leftAnchor="20.0" />
+   </children>
+</AnchorPane>

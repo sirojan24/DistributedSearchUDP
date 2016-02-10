@@ -4,12 +4,17 @@ public class Request {
 	private String host;
 	private int port;
 	private String message;
+	private int responseCode;
 
 	public Request(String host, int port, String message) {
 		super();
 		this.host = host;
 		this.port = port;
 		this.message = message;
+		
+		String[] response = message.split(" ");
+		
+		responseCode = Integer.parseInt(response[2]);
 	}
 
 	public String getHost() {
@@ -39,5 +44,13 @@ public class Request {
 	@Override
 	public String toString() {
 		return host + ":" + port + " - " + message;
+	}
+
+	public int getResponseCode() {
+		return responseCode;
+	}
+
+	public void setResponseCode(int responseCode) {
+		this.responseCode = responseCode;
 	}
 }

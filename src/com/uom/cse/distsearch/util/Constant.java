@@ -8,6 +8,8 @@ public class Constant {
 	
 	public static final String BOOTSTRAP_SERVER_HOST = "192.248.15.229";
 	
+	public static final String MOVIE_FILE_NAME = "movies.txt";
+	
 	public static final int BUFFER_SIZE = 65536;
 	
 	public static final class Command {
