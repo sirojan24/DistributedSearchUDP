@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -59,6 +60,7 @@ public class NodeApp extends Application {
 			Stage registrationViewStage = new Stage();
 			registrationViewStage.setTitle("Registration");
 			registrationViewStage.setScene(scene);
+			registrationViewStage.getIcons().add(new Image("icon.png"));
 
 			RegistrationViewController controller = loader.getController();
 			controller.setDialogStage(registrationViewStage);
@@ -82,6 +84,7 @@ public class NodeApp extends Application {
 			Stage registrationViewStage = new Stage();
 			registrationViewStage.setTitle("Distributed Search");
 			registrationViewStage.setScene(scene);
+			registrationViewStage.getIcons().add(new Image("icon.png"));
 
 			infoViewController = loader.getController();
 			infoViewController.setDialogStage(registrationViewStage);
