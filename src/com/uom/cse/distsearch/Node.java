@@ -79,7 +79,7 @@ public class Node extends Server {
 	public void join(NodeInfo info) {
 		// add this node as peer if not already exist
 		addAsPeer(info);
-
+		System.out.println("Joined : " + info.getIp() + " " + info.getPort());
 		// join to obtained node
 		String newJoinString = "0114 JOIN " + ip + " " + port;
 		send(newJoinString, info.getIp(), info.getPort());

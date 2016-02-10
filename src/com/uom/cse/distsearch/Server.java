@@ -34,18 +34,6 @@ public abstract class Server implements AutoCloseable {
 	String ip;
 	int port;
 	String username;
-	
-	public Server() {
-		if (socket == null) {
-			try {
-				socket = new DatagramSocket(port);
-				port = socket.getLocalPort();
-			} catch (SocketException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
 
 	public int start() throws SocketException {
 		return start(-1);
@@ -63,6 +51,7 @@ public abstract class Server implements AutoCloseable {
 		}
 
 		int localPort = socket.getLocalPort();
+		port = localPort;
 		LOGGER.info("Server is started at " + localPort);
 		System.out.println("Server is started at " + localPort);
 		startReceiving();
@@ -195,6 +184,7 @@ public abstract class Server implements AutoCloseable {
 	// }
 
 	public void startReceiving() {
+		System.out.println("Listening started... " + socket.getLocalPort() + " " + socket.getLocalAddress());
 		new Thread() {
 			public void run() {
 				while (socket != null && !socket.isClosed()) {
@@ -205,7 +195,7 @@ public abstract class Server implements AutoCloseable {
 
 						byte[] data = packet.getData();
 						String message = new String(data, 0, packet.getLength());
-
+						System.out.println("MESSAGE : " + message);
 						Request response = new Request(packet.getAddress().getHostAddress(), packet.getPort(), message);
 						onRequest(response);
 					} catch (IOException e) {

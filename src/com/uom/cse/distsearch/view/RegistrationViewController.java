@@ -1,6 +1,7 @@
 package com.uom.cse.distsearch.view;
 
 import java.io.IOException;
+import java.net.SocketException;
 
 import com.uom.cse.distsearch.Node;
 import com.uom.cse.distsearch.NodeApp;
@@ -32,6 +33,8 @@ public class RegistrationViewController {
 	private Button btnRegister;
 	private NodeApp nodeApp;
 	private Stage registrationViewStage;
+	
+	private Node node;
 
 	@FXML
 	private void registerAction() {
@@ -42,6 +45,7 @@ public class RegistrationViewController {
 		new Thread() {
 			@Override
 			public void run() {
+				
 				try {
 					String serverIp = txtServerIp.getText();
 					int serverPort = Integer.parseInt(txtServerPort.getText());
@@ -57,15 +61,20 @@ public class RegistrationViewController {
 						public void run() {
 							if (response.getResponseCode() != 9999){
 								
-								Node node = new Node(nodeIp, nodePort, username, 
-										Constant.MOVIE_FILE_NAME, nodeApp);
+								if (node == null){
+									node = new Node(nodeIp, nodePort, username, 
+											Constant.MOVIE_FILE_NAME, nodeApp);
+								}
 								
-								node.startReceiving();
-								node.onRequest(response);
-								
-								nodeApp.showInfoViewStage(node);
-								
-								registrationViewStage.close();
+								try {
+									node.start();
+									nodeApp.showInfoViewStage(node);
+									node.onRequest(response);
+
+									registrationViewStage.close();
+								} catch (SocketException e) {
+									lblErrorMsg.setText("Unable to start service!!!");
+								}
 							}else{
 								lblErrorMsg.setText("This IP has already been registered in the server!!!");
 								setDisableElements(false);
