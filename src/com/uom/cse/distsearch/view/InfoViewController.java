@@ -7,6 +7,7 @@ import com.uom.cse.distsearch.NodeApp;
 import com.uom.cse.distsearch.view.model.Movie;
 import com.uom.cse.distsearch.view.model.Neighbour;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,7 +15,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class InfoViewController {
 
@@ -45,11 +48,33 @@ public class InfoViewController {
 	@FXML
 	private void initialize() {
 		// Initialize neighbour table with the two columns.
-		ipColumn.setCellValueFactory(cellData -> cellData.getValue().IPAddressProperty());
-		nameColumn.setCellValueFactory(cellData -> cellData.getValue().NameProperty());
+		ipColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Neighbour,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Neighbour, String> param) {
+				// TODO Auto-generated method stub
+				return param.getValue().IPAddressProperty();
+			}
+		});
+		
+		nameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Neighbour,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Neighbour, String> param) {
+				// TODO Auto-generated method stub
+				return param.getValue().NameProperty();
+			}
+		});
 
 		// Initialize movie table with the two columns.
-		movieNameColumn.setCellValueFactory(cellData -> cellData.getValue().NameProperty());
+		movieNameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Movie,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Movie, String> param) {
+				// TODO Auto-generated method stub
+				return param.getValue().NameProperty();
+			}
+		});
 
 		// Add observable list data to the table
 		movieTable.setItems(movieDataList);
