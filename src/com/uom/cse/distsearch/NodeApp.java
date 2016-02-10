@@ -19,9 +19,22 @@ import javafx.stage.Stage;
 public class NodeApp extends Application {
 
 	private ObservableList<Neighbour> neighbourDataList = FXCollections.observableArrayList();
+	private InfoViewController infoViewController;
 	
 	public ObservableList<Neighbour> getNeighbourList(){
 		return this.neighbourDataList;
+	}
+	
+	public void printInfo (String info) {
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				if (infoViewController != null){
+					infoViewController.printInfo (info);
+				}
+			}
+		});
 	}
 	
 	public void addNeighbour (String name, String ip){
@@ -70,10 +83,10 @@ public class NodeApp extends Application {
 			registrationViewStage.setTitle("Distributed Search");
 			registrationViewStage.setScene(scene);
 
-			InfoViewController controller = loader.getController();
-			controller.setDialogStage(registrationViewStage);
-			controller.setNodeApp(this);
-			controller.setNode(node);
+			infoViewController = loader.getController();
+			infoViewController.setDialogStage(registrationViewStage);
+			infoViewController.setNodeApp(this);
+			infoViewController.setNode(node);
 
 			registrationViewStage.show();
 

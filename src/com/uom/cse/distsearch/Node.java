@@ -15,7 +15,6 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class Node extends Server {
@@ -63,7 +62,7 @@ public class Node extends Server {
 		try {
 			port = start();
 
-			String regString = "0114 REG " + ip + " " + port + " user" + port;
+			String regString = "0114 REG " + ip + " " + port + " " + username;
 
 			sendTcpToBootstrapServer(regString, Constant.BOOTSTRAP_SERVER_HOST, Constant.BOOTSTRAP_SERVER_PORT);
 		} catch (SocketException e) {
@@ -422,43 +421,4 @@ public class Node extends Server {
 		}
 	}
 
-	public static void main(String args[]) {
-//
-//		String movieFile = "movies.txt";
-//		try (Node node = new Node(movieFile); Scanner scanner = new Scanner(System.in);) {
-//			// IP address
-//			node.ip = args[0];
-//			// Start the node
-//			node.run();
-//			System.out.println("Node is running on: " + node.port);
-//			System.out.println("Movies: " + node.movieList);
-//			loop: while (true) {
-//				// take input and send the packet
-//				System.out.println("\nSelect option : ");
-//				System.out.println("1: Search");
-//				System.out.println("2: Disconnect");
-//				int option = Integer.parseInt(scanner.nextLine().trim());
-//				switch (option) {
-//				case 1:
-//					System.out.println("Enter the movie name: ");
-//					node.search(scanner.nextLine().trim());
-//					break;
-//
-//				case 2:
-//					System.out.println("Disconnecting this node");
-//					node.disconnect();
-//					node.close();
-//					System.exit(0);
-//
-//					break loop;
-//				case 3:
-//					System.out.println(node.peerList);
-//					break;
-//				default:
-//					System.out.println("Please enter a valid input");
-//					break;
-//				}
-//			}
-//		}
-	}
 }
