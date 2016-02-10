@@ -33,57 +33,53 @@ public class RegistrationViewController {
 	private Button btnRegister;
 	private NodeApp nodeApp;
 	private Stage registrationViewStage;
-	
+
 	private Node node;
 
 	@FXML
 	private void registerAction() {
 		lblErrorMsg.setText("");
-		
+
 		setDisableElements(true);
-		
+
 		new Thread() {
 			@Override
 			public void run() {
-				
+
 				try {
 					String serverIp = txtServerIp.getText();
 					int serverPort = Integer.parseInt(txtServerPort.getText());
 					final String nodeIp = txtNodeIP.getText();
-					final int nodePort = Integer.parseInt(txtNodePort.getText());
+					//final int nodePort = Integer.parseInt(txtNodePort.getText());
 					final String username = txtUsername.getText();
 
-					final Request response = Server.registerBootstrapServer(serverIp, serverPort, nodeIp, 
-							nodePort, username);
+					node = new Node(nodeIp, 0, username, Constant.MOVIE_FILE_NAME, nodeApp);
 					
+					final int nodePort = node.start();
+					registrationViewStage.close();
+
+					final Request response = Server.registerBootstrapServer(serverIp, serverPort, nodeIp, nodePort,
+							username);
+
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-							if (response.getResponseCode() != 9999){
-								
-								if (node == null){
-									node = new Node(nodeIp, nodePort, username, 
-											Constant.MOVIE_FILE_NAME, nodeApp);
-								}
-								
-								try {
-									node.start();
-									nodeApp.showInfoViewStage(node);
-									node.onRequest(response);
+							if (response.getResponseCode() != 9999) {
 
-									registrationViewStage.close();
-								} catch (SocketException e) {
-									lblErrorMsg.setText("Unable to start service!!!");
-								}
-							}else{
+								nodeApp.showInfoViewStage(node);
+								node.onRequest(response);
+
+								registrationViewStage.close();
+
+							} else {
 								lblErrorMsg.setText("This IP has already been registered in the server!!!");
 								setDisableElements(false);
 							}
 						}
 					});
-					
+
 				} catch (NumberFormatException numEx) {
-					
+
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
@@ -91,9 +87,9 @@ public class RegistrationViewController {
 							setDisableElements(false);
 						}
 					});
-					
+
 				} catch (IOException e) {
-					
+
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
@@ -101,7 +97,7 @@ public class RegistrationViewController {
 							lblErrorMsg.setText("Unable to connect to the server!!!");
 						}
 					});
-					
+
 				}
 			}
 		}.start();
