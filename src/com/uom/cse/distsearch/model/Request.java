@@ -13,8 +13,11 @@ public class Request {
 		this.message = message;
 		
 		String[] response = message.split(" ");
-		
-		responseCode = Integer.parseInt(response[2]);
+		try{
+			responseCode = Integer.parseInt(response[2]);
+		}catch(Exception e){
+			
+		}
 	}
 
 	public String getHost() {
