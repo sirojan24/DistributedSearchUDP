@@ -51,7 +51,7 @@ public abstract class Server implements AutoCloseable {
 		}
 
 		int localPort = socket.getLocalPort();
-		port = localPort;
+		this.port = localPort;
 		LOGGER.info("Server is started at " + localPort);
 		System.out.println("Server is started at " + localPort);
 		startReceiving();
