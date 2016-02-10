@@ -45,11 +45,11 @@ public class RegistrationViewController {
 				try {
 					String serverIp = txtServerIp.getText();
 					int serverPort = Integer.parseInt(txtServerPort.getText());
-					String nodeIp = txtNodeIP.getText();
-					int nodePort = Integer.parseInt(txtNodePort.getText());
-					String username = txtUsername.getText();
+					final String nodeIp = txtNodeIP.getText();
+					final int nodePort = Integer.parseInt(txtNodePort.getText());
+					final String username = txtUsername.getText();
 
-					Request response = Server.registerBootstrapServer(serverIp, serverPort, nodeIp, 
+					final Request response = Server.registerBootstrapServer(serverIp, serverPort, nodeIp, 
 							nodePort, username);
 					
 					Platform.runLater(new Runnable() {
