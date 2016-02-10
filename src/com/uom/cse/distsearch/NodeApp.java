@@ -25,7 +25,7 @@ public class NodeApp extends Application {
 		return this.neighbourDataList;
 	}
 	
-	public void printInfo (String info) {
+	public void printInfo (final String info) {
 		Platform.runLater(new Runnable() {
 			
 			@Override
@@ -37,7 +37,7 @@ public class NodeApp extends Application {
 		});
 	}
 	
-	public void addNeighbour (String name, String ip){
+	public void addNeighbour (final String name, final String ip){
 		Platform.runLater(new Runnable() {
 			
 			@Override
