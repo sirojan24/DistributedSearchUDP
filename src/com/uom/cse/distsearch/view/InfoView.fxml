@@ -72,7 +72,7 @@
                       <RowConstraints maxHeight="294.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <TextArea prefHeight="200.0" prefWidth="200.0">
+                        <TextArea fx:id="txtAreaInfo" prefHeight="200.0" prefWidth="200.0">
                            <GridPane.margin>
                               <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
                            </GridPane.margin>
@@ -86,12 +86,12 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <TextField promptText="Search">
+                              <TextField fx:id="txtSearch" promptText="Search">
                                  <GridPane.margin>
                                     <Insets left="6.0" right="6.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" text="Search" GridPane.columnIndex="1">
+                              <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#searchAction" prefHeight="25.0" prefWidth="125.0" text="Search" GridPane.columnIndex="1">
                                  <padding>
                                     <Insets left="6.0" right="6.0" />
                                  </padding>

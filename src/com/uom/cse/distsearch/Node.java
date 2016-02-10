@@ -294,16 +294,21 @@ public class Node extends Server {
 
 			if (fileCount == 0) {
 				System.out.println("No files found at " + senderIP + ":" + senderPort);
+				app.printInfo("No files found at " + senderIP + ":" + senderPort);
 			}
 			if (fileCount == 1) {
 				String output = String.format("Number of files: %d\r\nHops: %d\r\nTime: %s millis\r\nOwner %s:%d",
 						fileCount, hops, (currentTimestamp - queryTimestamp), senderIP, senderPort);
 				Utility.printToFile(output);
 
+				app.printInfo(output);
+				
 				System.out.println("1 file found at " + senderIP + ":" + senderPort);
 				String fileName = tokenizer.nextToken();
 				System.out.println("\t" + fileName);
 				Utility.printToFile(fileName);
+				app.printInfo(fileName);
+				
 				System.out.println("hops passed through : " + hops);
 				System.out.println("latency in milli seconds : " + (currentTimestamp - queryTimestamp));
 				Utility.printToFile("-----------------------------------------------------");
@@ -312,19 +317,25 @@ public class Node extends Server {
 				String output = String.format("Number of files: %d\r\nHops: %d\r\nTime: %s millis\r\nOwner %s:%d",
 						fileCount, hops, (currentTimestamp - queryTimestamp), senderIP, senderPort);
 				Utility.printToFile(output);
+				
+				app.printInfo(output);
 
 				System.out.println(fileCount + " files found at " + senderIP + ":" + senderPort);
 				for (int i = 0; i < fileCount; i++) {
 					String fileName = tokenizer.nextToken();
 					System.out.println("\t" + fileName);
+					app.printInfo("\t" + fileName);
+					
 					Utility.printToFile(fileName);
 				}
 				Utility.printToFile("-----------------------------------------------------");
 				System.out.println("hops passed through : " + hops);
+				
 				System.out.println("latency in milli seconds : " + (currentTimestamp - queryTimestamp));
 			}
 		} else if (Command.ERROR.equals(command)) {
 			System.out.println("Something went wrong.");
+			app.printInfo("Server Error!!!");
 		} else {
 			String reply = "0010 ERROR";
 			send(reply, senderIP, senderPort);
@@ -371,6 +382,7 @@ public class Node extends Server {
 		}
 
 		System.out.println("Forwarded messages for query " + "'" + message + "' " + forwardMsgCount);
+		app.printInfo("Forwarded messages for query " + "'" + message + "' " + forwardMsgCount);
 	}
 
 	/**
@@ -398,6 +410,7 @@ public class Node extends Server {
 		onRequest(new Request(ip, port, resultString));
 
 		System.out.println("Forwarded messages for query " + "'" + searchString + "' " + forwardMsgCount);
+		app.printInfo("Forwarded messages for query " + "'" + searchString + "' " + forwardMsgCount);
 	}
 
 	public void disconnect() {
