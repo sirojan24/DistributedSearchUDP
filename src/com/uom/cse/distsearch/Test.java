@@ -17,7 +17,7 @@ public class Test {
 		String movieFile = "movies.txt";
 		try (Node node = new Node(movieFile);) {
 			// IP address
-			node.setIp("10.111.12.30");
+			node.setIp(args[0]);
 
 			// Start the node
 			node.run();
@@ -25,12 +25,20 @@ public class Test {
 			Utility.printToFile("Node: " + node.getIp() + ":" + node.getPort());
 
 			Utility.printToFile("");
-			
+
 			String movies = node.getMovies().stream().collect(Collectors.joining(", "));
 
 			Utility.printToFile("Movies: " + movies);
 
 			Utility.printToFile("");
+
+			System.out.println("Please hit the enter to continue testing...");
+
+			try (Scanner scanner = new Scanner(System.in)) {
+				if (scanner.hasNextLine()) {
+					scanner.nextLine();
+				}
+			}
 
 			List<NodeInfo> peersList = node.getPeerList();
 			int count = peersList.size();
