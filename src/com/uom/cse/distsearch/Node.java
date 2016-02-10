@@ -33,7 +33,7 @@ public class Node extends Server {
 
 	public Node(String nodeIp, int nodePort, String username, String filename, NodeApp app) {
 		this.ip = nodeIp;
-		this.port = nodePort;
+		//this.port = nodePort;
 		this.username = username;
 		this.app = app;
 		
@@ -89,7 +89,7 @@ public class Node extends Server {
 		if (!peerList.contains(info)) {
 			peerList.add(info);
 			
-			app.addNeighbour(info.getUsername(), info.getIp());
+			app.addNeighbour("user_" + info.getPort(), info.getIp());
 		}
 	}
 

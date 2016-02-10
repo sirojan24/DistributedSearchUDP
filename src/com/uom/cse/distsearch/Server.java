@@ -36,9 +36,10 @@ public abstract class Server implements AutoCloseable {
 	String username;
 	
 	public Server() {
-		if (socket != null) {
+		if (socket == null) {
 			try {
 				socket = new DatagramSocket(port);
+				port = socket.getLocalPort();
 			} catch (SocketException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
