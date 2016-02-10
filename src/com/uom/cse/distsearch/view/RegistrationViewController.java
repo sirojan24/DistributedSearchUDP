@@ -56,7 +56,6 @@ public class RegistrationViewController {
 					node = new Node(nodeIp, 0, username, Constant.MOVIE_FILE_NAME, nodeApp);
 					
 					final int nodePort = node.start();
-					registrationViewStage.close();
 
 					final Request response = Server.registerBootstrapServer(serverIp, serverPort, nodeIp, nodePort,
 							username);
