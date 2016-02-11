@@ -430,7 +430,7 @@ public class Node extends Server {
 	public void disconnect() {
 		// remove this node from all peers list
 		for (NodeInfo peerInfo : peerList) {
-			// send leave msg
+			// send leave to peer
 			send("0114 LEAVE " + ip + " " + port, peerInfo.getIp(), peerInfo.getPort());
 			
 			for (NodeInfo peerInfo2 : peerList) {
