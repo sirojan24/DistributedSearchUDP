@@ -197,7 +197,7 @@ public class Node extends Server {
 			int portNumber = Integer.parseInt(tokenizer.nextToken());
 
 			// create node info
-			NodeInfo senderInfo = new NodeInfo(senderIP, senderPort);
+			NodeInfo senderInfo = new NodeInfo(ipAddress, portNumber);
 
 			// add as peer
 			addAsPeer(senderInfo);
@@ -430,7 +430,7 @@ public class Node extends Server {
 	}
 
 	public void disconnect(){
-		socket = null;
+		
 		// remove this node from all peers list
 		for (NodeInfo peerInfo : peerList) {
 			// send leave to peer
@@ -452,6 +452,8 @@ public class Node extends Server {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		socket = null;
 	}
 
 }

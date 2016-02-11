@@ -82,6 +82,8 @@ public abstract class Server implements AutoCloseable {
 			socket.send(packet);
 		} catch (IOException e) {
 			LOGGER.error(e.getMessage(), e);
+		} catch (NullPointerException ex){
+			LOGGER.error(ex.getMessage(), ex);
 		}
 	}
 
@@ -172,7 +174,6 @@ public abstract class Server implements AutoCloseable {
 	}
 
 	public void startReceiving() {
-		System.out.println("Listening started... " + socket.getLocalPort() + " " + socket.getLocalAddress());
 		Thread listener = new Thread() {
 			public void run() {
 				while (socket != null && !socket.isClosed()) {
@@ -188,6 +189,8 @@ public abstract class Server implements AutoCloseable {
 						onRequest(response);
 					} catch (IOException e) {
 						LOGGER.error("Error in receiving packet.", e);
+					} catch (NullPointerException ex){
+						LOGGER.error(ex.getMessage(), ex);
 					}
 				}
 			}
