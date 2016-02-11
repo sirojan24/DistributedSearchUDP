@@ -39,25 +39,36 @@ public class NodeApp extends Application {
 	}
 	
 	public void addNeighbour (final String name, final String ip){
-		Platform.runLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				Neighbour neighbour = new Neighbour(ip, name);
-				neighbourDataList.add(neighbour);
-			}
-		});
+		synchronized (NodeApp.class) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					Neighbour neighbour = new Neighbour(ip, name);
+					neighbourDataList.add(neighbour);
+				}
+			});
+		}
 	}
 	
 	public void removeNeighbour (final String name, final String ip){
-		Platform.runLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				Neighbour neighbour = new Neighbour(ip, name);
-				neighbourDataList.remove(neighbour);
-			}
-		});
+		synchronized (NodeApp.class) {
+			Platform.runLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					int count = 0;
+					for (Neighbour neighbour : neighbourDataList) {
+
+						if (neighbour.getIPAddress().equals(ip) && neighbour.getName().equals(name)) {
+							neighbourDataList.remove(count);
+							break;
+						}
+						count++;
+					}
+				}
+			});
+		}
 	}
 	
 	public void showRegistrationViewStage() {
