@@ -453,7 +453,7 @@ public class Node extends Server {
 			e.printStackTrace();
 		}
 		
-		socket = null;
+		//socket = null;
 	}
 
 }
