@@ -87,6 +87,7 @@ public class Node extends Server {
 
 	public void handleLeave(NodeInfo node) {
 		peerList.remove(node);
+		app.removeNeighbour("user_" + node.getPort(), node.getIp());
 	}
 
 	public void join(NodeInfo info) {
