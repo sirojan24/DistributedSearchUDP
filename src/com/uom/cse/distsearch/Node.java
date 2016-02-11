@@ -12,10 +12,7 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Node extends Server {
 	/**
@@ -143,14 +140,18 @@ public class Node extends Server {
 				List<NodeInfo> returnedNodes = new ArrayList<NodeInfo>();
 
 				for (int i = 0; i < no_nodes; i++) {
-					String ip = tokenizer.nextToken();
-					String port = tokenizer.nextToken();
-					String userID = tokenizer.nextToken();
+					try {
+						String ip = tokenizer.nextToken();
+						String port = tokenizer.nextToken();
+						String userID = tokenizer.nextToken();
 
-					System.out.println(String.format("%s:%s - %s", ip, port, userID));
+						System.out.println(String.format("%s:%s - %s", ip, port, userID));
 
-					NodeInfo node = new NodeInfo(ip, Integer.parseInt(port));
-					returnedNodes.add(node);
+						NodeInfo node = new NodeInfo(ip, Integer.parseInt(port));
+						returnedNodes.add(node);
+					}catch (NoSuchElementException ex){
+						ex.printStackTrace();
+					}
 				}
 
 				returnedNodes = pickNRandom(returnedNodes, 2);
@@ -213,6 +214,7 @@ public class Node extends Server {
 		} else if (Command.LEAVE.equals(command)) {
 			String ipAddress = tokenizer.nextToken();
 			int portNumber = Integer.parseInt(tokenizer.nextToken());
+			System.out.println("Leave command from ip : " + ipAddress + "port : " + portNumber);
 
 			// remove this node from peerList
 			handleLeave(new NodeInfo(ipAddress, portNumber));
@@ -427,7 +429,8 @@ public class Node extends Server {
 		app.printInfo("Forwarded messages for query " + "'" + searchString + "' " + forwardMsgCount);
 	}
 
-	public void disconnect() {
+	public void disconnect(){
+		socket = null;
 		// remove this node from all peers list
 		for (NodeInfo peerInfo : peerList) {
 			// send leave to peer

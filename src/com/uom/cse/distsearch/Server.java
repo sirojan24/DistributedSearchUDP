@@ -28,7 +28,7 @@ public abstract class Server implements AutoCloseable {
 	/**
 	 * Socket to receive the requests.
 	 */
-	private DatagramSocket socket;
+	protected DatagramSocket socket;
 	
 	// this node details
 	String ip;

@@ -53,6 +53,7 @@ public class NodeApp extends Application {
     }
 
     public void removeNeighbour(final String name, final String ip) {
+        System.out.println("Leave command from ip : " + ip + "name : " + name);
         synchronized (NodeApp.class) {
             Platform.runLater(new Runnable() {
 
