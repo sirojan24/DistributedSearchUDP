@@ -113,6 +113,14 @@ public class RegistrationViewController {
 		btnRegister.setDisable(flag);
 	}
 
+	public void setDefaults(String serverIp, String serverPort, String nodeIp, String nodePort, String userName) {
+		txtServerIp.setText(serverIp);
+		txtServerPort.setText(serverPort);
+		txtNodeIP.setText(nodeIp);
+		txtNodePort.setText(nodePort);
+		txtUsername.setText(userName);
+	}
+
 	public void setDialogStage(Stage registrationViewStage) {
 		this.registrationViewStage = registrationViewStage;
 	}

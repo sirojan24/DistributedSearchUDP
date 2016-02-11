@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import org.apache.log4j.Logger;
 
 public class Utility {
-	private static final String FILE_NAME = "UDP_Output.txt";
+	private static final String FILE_NAME = Settings.getInstance().getOutputFile();
 
 	private static final Logger LOGGER = Logger.getLogger(Utility.class);
 

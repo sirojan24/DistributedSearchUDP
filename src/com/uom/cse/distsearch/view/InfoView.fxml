@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uom.cse.distsearch.view.InfoViewController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uom.cse.distsearch.view.InfoViewController">
    <children>
       <SplitPane dividerPositions="0.36466165413533835" layoutX="14.0" layoutY="22.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -92,7 +92,10 @@
                                     <Insets left="6.0" right="6.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#searchAction" prefHeight="25.0" prefWidth="101.0" text="Search" GridPane.columnIndex="1">
+                               <Button fx:id="btnSearch" layoutX="170.0" layoutY="239.0" mnemonicParsing="false" onAction="#searchAction" prefHeight="26.0" prefWidth="100.0" text="Search" AnchorPane.rightAnchor="170.0" GridPane.columnIndex="1" />
+                               <Button fx:id="btnDisconnect" layoutX="170.0" layoutY="239.0" mnemonicParsing="false" onAction="#disconnectAction" text="Disconnect" prefHeight="26.0" prefWidth="100.0" AnchorPane.rightAnchor="170.0" GridPane.columnIndex="2" />
+                              <!--
+                               <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#searchAction" prefHeight="25.0" prefWidth="101.0" text="Search" GridPane.columnIndex="1">
                                  <padding>
                                     <Insets left="6.0" right="6.0" />
                                  </padding>
@@ -100,6 +103,7 @@
                                     <Insets left="6.0" right="6.0" />
                                  </GridPane.margin>
                               </Button>
+
                               <Button fx:id="btnDisconnect" mnemonicParsing="false" onAction="#disconnectAction" prefHeight="25.0" prefWidth="104.0" text="Disconnect" GridPane.columnIndex="2">
                                  <padding>
                                     <Insets left="6.0" right="6.0" />
@@ -108,6 +112,7 @@
                                     <Insets left="6.0" right="6.0" />
                                  </GridPane.margin>
                               </Button>
+                              -->
                            </children>
                         </GridPane>
                      </children>

@@ -121,6 +121,6 @@ public class InfoViewController {
 	}
 
 	public void printInfo(String info) {
-		txtAreaInfo.setText(txtAreaInfo.getText() + "\n" + info);
+		txtAreaInfo.setText(txtAreaInfo.getText() + "\n\n" + info);
 	}
 }
