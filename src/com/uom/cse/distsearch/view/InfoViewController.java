@@ -42,6 +42,8 @@ public class InfoViewController {
 	private TextArea txtAreaInfo;
 	@FXML
 	private TextField txtSearch;
+	@FXML
+	private Button btnDisconnect;
 
 	private Stage registrationViewStage;
 	private NodeApp nodeApp;
@@ -87,6 +89,14 @@ public class InfoViewController {
 	@FXML
 	private void searchAction (){
 		node.search(txtSearch.getText());
+	}
+	
+	@FXML
+	private void disconnectAction (){
+		node.disconnect();
+		btnSearch.setDisable(true);
+		txtSearch.setDisable(true);
+		btnDisconnect.setDisable(true);
 	}
 	
 	public void setDialogStage(Stage registrationViewStage) {

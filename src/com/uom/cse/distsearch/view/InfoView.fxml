@@ -100,7 +100,7 @@
                                     <Insets left="6.0" right="6.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Button fx:id="btnSearch1" mnemonicParsing="false" onAction="#searchAction" prefHeight="25.0" prefWidth="104.0" text="Disconnect" GridPane.columnIndex="2">
+                              <Button fx:id="btnDisconnect" mnemonicParsing="false" onAction="#disconnectAction" prefHeight="25.0" prefWidth="104.0" text="Disconnect" GridPane.columnIndex="2">
                                  <padding>
                                     <Insets left="6.0" right="6.0" />
                                  </padding>

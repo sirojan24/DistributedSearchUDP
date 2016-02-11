@@ -31,17 +31,30 @@ public class Node extends Server {
 
 	private final MovieList movieList;
 
-	public Node(String nodeIp, int nodePort, String username, String filename, NodeApp app) {
+	public Node(String serverIp, int serverPort, String nodeIp, int nodePort, String username, 
+			String filename, NodeApp app) {
 		this.ip = nodeIp;
 		//this.port = nodePort;
 		this.username = username;
 		this.app = app;
+		this.serverIp = serverIp;
+		this.serverPort = serverPort;
 		
 		movieList = new MovieList(filename);
 
 		peerList = new ArrayList<NodeInfo>();
 
 		queryList = new ArrayList<QueryInfo>();
+	}
+	
+	public Request register () throws IOException{
+		this.port = start();
+		
+		Request response = registerBootstrapServer(serverIp, serverPort, ip, port, username);
+		
+		onRequest(response);
+		
+		return response;
 	}
 	
 	public Node(String filename) {
@@ -420,9 +433,9 @@ public class Node extends Server {
 			send("0114 LEAVE " + ip + " " + port, peerInfo.getIp(), peerInfo.getPort());
 		}
 
-		String unRegString = "0114 UNREG " + ip + " " + port + " user" + port;
 		try {
-			sendTcpToBootstrapServer(unRegString, Constant.BOOTSTRAP_SERVER_HOST, Constant.BOOTSTRAP_SERVER_PORT);
+			unRegisterBootstrapServer(serverIp, serverPort, ip, port, username);
+			app.printInfo("Node disconnected from server....");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,5 +1,7 @@
 package com.uom.cse.distsearch.view.model;
 
+import com.uom.cse.distsearch.model.NodeInfo;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -34,5 +36,25 @@ public class Neighbour {
     
     public StringProperty IPAddressProperty() {
         return IPAddress;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Neighbour neighbour = (Neighbour) o;
+
+        if (!name.equals(neighbour.getName())) return false;
+        
+        return IPAddress.equals(neighbour.getIPAddress());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = IPAddress.hashCode();
+        result = 31 * result;
+        return result;
     }
 }

@@ -2,7 +2,6 @@ package com.uom.cse.distsearch;
 
 import java.io.IOException;
 
-import com.uom.cse.distsearch.model.Request;
 import com.uom.cse.distsearch.view.InfoViewController;
 import com.uom.cse.distsearch.view.RegistrationViewController;
 import com.uom.cse.distsearch.view.model.Neighbour;
@@ -16,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class NodeApp extends Application {
 
@@ -49,6 +49,17 @@ public class NodeApp extends Application {
 		});
 	}
 	
+	public void removeNeighbour (final String name, final String ip){
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				Neighbour neighbour = new Neighbour(ip, name);
+				neighbourDataList.remove(neighbour);
+			}
+		});
+	}
+	
 	public void showRegistrationViewStage() {
 		try {
 			// Load person overview.
@@ -60,6 +71,7 @@ public class NodeApp extends Application {
 			Stage registrationViewStage = new Stage();
 			registrationViewStage.setTitle("Registration");
 			registrationViewStage.setScene(scene);
+			registrationViewStage.initStyle(StageStyle.UTILITY);
 			registrationViewStage.getIcons().add(new Image("icon.png"));
 
 			RegistrationViewController controller = loader.getController();
@@ -84,6 +96,7 @@ public class NodeApp extends Application {
 			Stage registrationViewStage = new Stage();
 			registrationViewStage.setTitle("Distributed Search");
 			registrationViewStage.setScene(scene);
+			registrationViewStage.setResizable(false);
 			registrationViewStage.getIcons().add(new Image("icon.png"));
 
 			infoViewController = loader.getController();

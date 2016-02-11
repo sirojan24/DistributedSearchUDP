@@ -45,7 +45,7 @@ public class RegistrationViewController {
 		new Thread() {
 			@Override
 			public void run() {
-
+				
 				try {
 					String serverIp = txtServerIp.getText();
 					int serverPort = Integer.parseInt(txtServerPort.getText());
@@ -53,29 +53,7 @@ public class RegistrationViewController {
 					//final int nodePort = Integer.parseInt(txtNodePort.getText());
 					final String username = txtUsername.getText();
 
-					node = new Node(nodeIp, 0, username, Constant.MOVIE_FILE_NAME, nodeApp);
-					
-					final int nodePort = node.start();
-
-					final Request response = Server.registerBootstrapServer(serverIp, serverPort, nodeIp, nodePort,
-							username);
-
-					Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
-							if (response.getResponseCode() != 9999) {
-
-								nodeApp.showInfoViewStage(node);
-								node.onRequest(response);
-
-								registrationViewStage.close();
-
-							} else {
-								lblErrorMsg.setText("This IP has already been registered in the server!!!");
-								setDisableElements(false);
-							}
-						}
-					});
+					node = new Node(serverIp, serverPort, nodeIp, 0, username, Constant.MOVIE_FILE_NAME, nodeApp);
 
 				} catch (NumberFormatException numEx) {
 
@@ -84,6 +62,29 @@ public class RegistrationViewController {
 						public void run() {
 							lblErrorMsg.setText("Please Check Your Input!!!");
 							setDisableElements(false);
+						}
+					});
+
+				}
+
+				try {
+					
+
+					Platform.runLater(new Runnable() {
+						Request response = node.register();
+						
+						@Override
+						public void run() {
+							if (response.getResponseCode() != 9999) {
+
+								nodeApp.showInfoViewStage(node);
+
+								registrationViewStage.close();
+
+							} else {
+								lblErrorMsg.setText("This IP has already been registered in the server!!!");
+								setDisableElements(false);
+							}
 						}
 					});
 

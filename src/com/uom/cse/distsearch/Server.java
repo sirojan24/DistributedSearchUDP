@@ -34,6 +34,8 @@ public abstract class Server implements AutoCloseable {
 	String ip;
 	int port;
 	String username;
+	String serverIp;
+	int serverPort;
 
 	public int start() throws SocketException {
 		return start(-1);
@@ -51,7 +53,6 @@ public abstract class Server implements AutoCloseable {
 		}
 
 		int localPort = socket.getLocalPort();
-		this.port = localPort;
 		LOGGER.info("Server is started at " + localPort);
 		System.out.println("Server is started at " + localPort);
 		startReceiving();
@@ -112,7 +113,7 @@ public abstract class Server implements AutoCloseable {
 		onRequest(response);
 	}
 
-	public static Request registerBootstrapServer(String serverIp, int serverPort, String nodeIp, int nodePort, 
+	public Request registerBootstrapServer(String serverIp, int serverPort, String nodeIp, int nodePort, 
 			String username) throws IOException {
 		
 		Socket clientSocket = new Socket(serverIp, serverPort);
@@ -142,50 +143,37 @@ public abstract class Server implements AutoCloseable {
 		return response;
 	}
 	
-	// public void sendTcpToBootstrapServer(String messsage, String ip, int
-	// port){
-	//
-	// Socket echoSocket = null;
-	// PrintWriter out = null;
-	// BufferedReader in = null;
-	//
-	// try {
-	// echoSocket = new Socket(ip, port);
-	// out = new PrintWriter(echoSocket.getOutputStream(), true);
-	// in = new BufferedReader(new InputStreamReader(
-	// echoSocket.getInputStream()));
-	// out.println(messsage);
-	//// char[] buf = new char[1024];
-	//// in.read(buf);
-	// StringBuilder result = new StringBuilder();
-	// int c;
-	// while ((c = in.read()) != -1) {
-	// //Since c is an integer, cast it to a char. If it isn't -1, it will be in
-	// the correct range of char.
-	// result.append( (char)c ) ;
-	// }
-	// System.out.println(result.toString());
-	// Request response = new Request(Constant.BOOTSTRAP_SERVER_HOST,
-	// Constant.BOOTSTRAP_SERVER_PORT, result.toString());
-	//
-	// onRequest(response);
-	// } catch (Exception e) {
-	// System.out.println("Error Connecting to: " + ip);
-	// e.printStackTrace();
-	// } finally {
-	// try {
-	// out.close();
-	// in.close();
-	// echoSocket.close();
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// }
+	public String unRegisterBootstrapServer(String serverIp, int serverPort, String nodeIp, int nodePort, 
+			String username) throws IOException {
+		
+		Socket clientSocket = new Socket(serverIp, serverPort);
+		PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+		
+		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+		
+		String regString = "0114 UNREG " + nodeIp + " " + nodePort + " " + username;
+		
+		out.print(regString);
+		out.flush();
+		
+		StringBuilder builder = new StringBuilder();
+		String line = null;
+		while((line = inFromServer.readLine()) != null) {
+			builder.append(line);
+		}
+		System.out.println("DIRECT: " + builder);
+		
+		String result = builder.toString().replace("\r\n", " ").replace('\n', ' ').replace("", "");
+		
+		System.out.println("FROM SERVER: " + result);
+		clientSocket.close();
+		
+		return result;
+	}
 
 	public void startReceiving() {
 		System.out.println("Listening started... " + socket.getLocalPort() + " " + socket.getLocalAddress());
-		new Thread() {
+		Thread listener = new Thread() {
 			public void run() {
 				while (socket != null && !socket.isClosed()) {
 					byte[] buffer = new byte[Constant.BUFFER_SIZE];
@@ -203,7 +191,10 @@ public abstract class Server implements AutoCloseable {
 					}
 				}
 			}
-		}.start();
+		};
+		
+		listener.setDaemon(true);
+		listener.start();
 	}
 
 	public abstract void onRequest(Request request);
