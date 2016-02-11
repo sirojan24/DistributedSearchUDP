@@ -432,6 +432,14 @@ public class Node extends Server {
 		for (NodeInfo peerInfo : peerList) {
 			// send leave msg
 			send("0114 LEAVE " + ip + " " + port, peerInfo.getIp(), peerInfo.getPort());
+			
+			for (NodeInfo peerInfo2 : peerList) {
+				if (!peerInfo.equals(peerInfo2)) {
+					String joinString = "0114 JOIN " + peerInfo2.getIp() + " " + peerInfo2.getPort();
+					
+					send(joinString, peerInfo.getIp(), peerInfo.getPort());
+				}
+			}
 		}
 
 		try {
